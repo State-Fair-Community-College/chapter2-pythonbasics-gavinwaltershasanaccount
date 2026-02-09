@@ -1,0 +1,39 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: chapter2Autograde
+      id: chapter2autograde
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: chapter2Autograde
+        setup-command: ''
+        command: python3 Chapt2-PythonBasics.py
+        input: |-
+          blue
+          1
+          1
+          10
+          40
+          15
+        expected-output: blue[\s\S]*2[\s\S]*10\.8[\s\S]*\$600\.00
+        comparison-method: regex
+        timeout: 1
+        max-score: 5
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        CHAPTER2AUTOGRADE_RESULTS: "${{steps.chapter2autograde.outputs.result}}"
+      with:
+        runners: chapter2autograde
