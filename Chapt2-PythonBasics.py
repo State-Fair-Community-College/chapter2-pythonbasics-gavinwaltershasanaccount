@@ -15,9 +15,7 @@
 # 2. Store your name as a string in the variable
 # 3. Use print() to display: Hello, <name>
 
-name='placeholder' # placeholder definition of the variable named name
-
-name=input('What is your name? ') # input used to redifine the value of the variable name
+name=input('What is your name? ') # input used to define the value of the variable name
 
 print('Hello,', name)  # blank line for readability
 
